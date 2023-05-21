@@ -1,4 +1,5 @@
 import { EventListener } from './EventListener';
+import { Task } from './Task';
 
 class Application {
   private readonly eventListener = new EventListener();
@@ -16,7 +17,13 @@ class Application {
 
   handleSubmit(e: Event) {
     e.preventDefault();
-    console.log('submit');
+
+    const titleInput = document.getElementById('title') as HTMLInputElement;
+
+    if (!titleInput) return;
+
+    const task = new Task({ title: titleInput.value });
+    console.log(task);
   }
 }
 
