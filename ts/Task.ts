@@ -7,6 +7,7 @@ export const statusMap = {
 } as const;
 
 export type Status = (typeof statusMap)[keyof typeof statusMap];
+
 export class Task {
   readonly id;
   title;
@@ -14,7 +15,7 @@ export class Task {
 
   constructor(properties: { title: string }) {
     this.id = uuid();
-    this.title = properties;
+    this.title = properties.title;
     this.status = statusMap.todo;
   }
 }
