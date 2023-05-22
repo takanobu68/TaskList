@@ -1,8 +1,10 @@
 import { EventListener } from './EventListener';
 import { Task } from './Task';
+import { TaskCollection } from './TaskCollection';
 
 class Application {
   private readonly eventListener = new EventListener();
+  private readonly taskCollection = new TaskCollection();
 
   start() {
     const createForm = document.getElementById('createForm') as HTMLElement;
@@ -15,16 +17,18 @@ class Application {
     );
   }
 
-  handleSubmit(e: Event) {
+  private handleSubmit = (e: Event) => {
     e.preventDefault();
 
     const titleInput = document.getElementById('title') as HTMLInputElement;
 
-    if (!titleInput) return;
+    if (!titleInput.value) return;
 
     const task = new Task({ title: titleInput.value });
-    console.log(task);
-  }
+
+    this.taskCollection.add(task);
+    console.log(this.taskCollection);
+  };
 }
 
 window.addEventListener('load', () => {
