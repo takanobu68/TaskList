@@ -2,6 +2,12 @@ import { Status, Task } from './Task';
 
 export class TaskCollection {
   private tasks: Task[] = [];
+  private readonly storage;
+
+  constructor() {
+    this.storage = localStorage;
+    console.log(this.storage);
+  }
 
   add(task: Task) {
     this.tasks.push(task);
