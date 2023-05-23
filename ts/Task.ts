@@ -1,4 +1,4 @@
-import { v4 as uuid } from 'uuid';
+import { v4 as uuid, validate } from 'uuid';
 
 export const statusMap = {
   todo: 'TODO',
@@ -7,6 +7,12 @@ export const statusMap = {
 } as const;
 
 export type Status = (typeof statusMap)[keyof typeof statusMap];
+
+export type TaskObject = {
+  id: string;
+  title: string;
+  status: Status;
+};
 
 export class Task {
   readonly id;
@@ -22,5 +28,13 @@ export class Task {
   update(properties: { title?: string; status?: Status }) {
     this.title = properties.title || this.title;
     this.status = properties.status || this.status;
+  }
+
+  static validate(value: any) {
+    if (!value) return false;
+    if (!validate(value.id)) return false;
+    if (!value.title) return false;
+    if (!Object.values(statusMap).includes(value.status)) return false;
+    return true;
   }
 }
